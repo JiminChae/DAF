@@ -1,3 +1,6 @@
+#
+# Directed labeled graph
+#
 class Graph:
     def __init__(self):
         self.label_stat = {}
