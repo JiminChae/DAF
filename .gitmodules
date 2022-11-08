@@ -1,0 +1,3 @@
+[submodule "ref/DAF"]
+	path = ref/DAF
+	url = https://github.com/SNUCSE-CTA/DAF.git
