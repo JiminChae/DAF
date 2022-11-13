@@ -14,6 +14,11 @@ def main():
 
     query_dag = algorithm.build_dag(query, data)
 
+    query_dag_v = query_dag.get_vertices()
+    for v in query_dag_v:
+        print(v, end= " : ")
+        print(query_dag.get_vertex_neighbors(v))
+
     # TODO
 
 
