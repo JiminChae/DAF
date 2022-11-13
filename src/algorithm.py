@@ -3,8 +3,8 @@ import graph
 def build_dag(query, data):
     query_dag = graph.Graph()
 
-    query_vids = query.get_label_stat()
-    data_vids = data.get_label_stat()
+    query_vids = query.get_vertices()
+    data_vids = data.get_vertices()
 
     for vid in query_vids:
         query_dag.set_vertex(vid, query.get_vertex_label(vid))
@@ -26,7 +26,6 @@ def build_dag(query, data):
     bfs_unvisited = {}
     for u in query_vids:
         bfs_unvisited[u] = True
-    bfs_unvisited[root] = False
 
     bfs_to_traverse = [root]
     while bfs_to_traverse:
