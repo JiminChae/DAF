@@ -2,7 +2,7 @@
 
 import sys
 
-import algorithm, util
+import algorithm, util, DAG
 
 def main():
     if len(sys.argv) != 3:
@@ -12,12 +12,9 @@ def main():
     data = util.load_graph(sys.argv[1])
     query = util.load_graph(sys.argv[2])
 
-    query_dag = algorithm.build_dag(query, data)
+    query_dag = DAG.build_dag(query, data)
 
     query_dag_v = query_dag.get_vertices()
-    for v in query_dag_v:
-        print(v, end= " : ")
-        print(query_dag.get_vertex_neighbors(v))
 
     # TODO
 
