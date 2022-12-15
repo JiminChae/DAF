@@ -24,13 +24,13 @@ class DAG:
                     C_ini_size[u] += 1
 
         # find root
-        root = sorted(query_vids, key=lambda u: C_ini_size[u] / len(query.get_vertex_neighbors(u)))[0]
+        self.root = sorted(query_vids, key=lambda u: C_ini_size[u] / len(query.get_vertex_neighbors(u)))[0]
 
         bfs_unvisited = {}
         for u in query_vids:
             bfs_unvisited[u] = True
 
-        bfs_to_traverse = [root]
+        bfs_to_traverse = [self.root]
         while bfs_to_traverse:
             cur_vid = bfs_to_traverse.pop(0)
             bfs_unvisited[cur_vid] = False
