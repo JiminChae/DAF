@@ -19,9 +19,8 @@ def main():
     # 2. Build the CS structure by using DAG-graph DP
     cand_space = cs.CS(query, query_dag, data)
 
-    # TODO
-
-
+    # 3. Backtrack using Adaptive Order & Failing Set
+    matching = backtrack.backtrack(query_dag = query_dag, cs = cand_space)
 
 if __name__ == "__main__":
     main()

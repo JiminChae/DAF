@@ -6,7 +6,7 @@ import graph
 class DAG:
     def __init__(self, query, data):
         self.dag = graph.Graph()
-        self.ag_inv = graph.Graph()
+        self.dag_inv = graph.Graph()
 
         vids = query.get_vertices()
         data_vids = data.get_vertices()
@@ -57,8 +57,8 @@ class DAG:
         return self.dag_inv.get_vertex_neighbors(u)
 
     def get_ancestor(self, u):
-        queue = list(self.get_parent(u))
-        ancestor = self.get_parent(u)
+        queue = list(u)
+        ancestor = [u]
 
         while queue:
             curAnc = queue.pop(0)
