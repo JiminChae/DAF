@@ -2,7 +2,8 @@
 
 import sys
 
-import algorithm, util, DAG
+import util
+import dag, cs, backtrack
 
 def main():
     if len(sys.argv) != 3:
@@ -12,9 +13,11 @@ def main():
     data = util.load_graph(sys.argv[1])
     query = util.load_graph(sys.argv[2])
 
-    query_dag = DAG.build_dag(query, data)
+    # 1. Build a rooted DAG
+    query_dag = dag.DAG(query, data)
 
-    query_dag_v = query_dag.get_vertices()
+    # 2. Build the CS structure by using DAG-graph DP
+    cand_space = cs.CS(query, query_dag, data)
 
     # TODO
 

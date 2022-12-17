@@ -1,5 +1,8 @@
 import graph
 
+#
+# Directed Acyclic Graph
+#
 class DAG:
     def __init__(self, query, data):
         self.query_dag = graph.Graph()

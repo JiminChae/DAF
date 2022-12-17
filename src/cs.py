@@ -1,8 +1,8 @@
-#
-# Candidate Set
-#
-import DAG
+import dag
 
+#
+# Candidate Space
+#
 class CS:
     def __init__(self, query, query_dag, data):
         self.vertex = {}
