@@ -1,4 +1,5 @@
 import graph
+from copy import deepcopy
 
 #
 # Directed Acyclic Graph
@@ -57,18 +58,20 @@ class DAG:
         return self.dag_inv.get_vertex_neighbors(u)
 
     def get_ancestor(self, u):
-        queue = list(u)
-        ancestor = [u]
+        queue = [u]
+        ancestor = set()
 
         while queue:
             curAnc = queue.pop(0)
-            anc_parents = self.get_parent(curAnc)
+            ancestor.add(curAnc)
+
+            anc_parents = deepcopy(self.get_parent(curAnc))
+
             while anc_parents:
                 anc_parnet = anc_parents.pop()
 
                 if anc_parnet not in ancestor:
                     queue.append(anc_parnet)
-                    ancestor.add(anc_parnet)
 
         return ancestor
 

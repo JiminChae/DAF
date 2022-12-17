@@ -3,7 +3,7 @@ from copy import deepcopy
 
 def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
     if emb is None:
-        (failing, answer) = backtrack(query_dag, cs, emb = {}, ext = {cs.query_dag.get_root()}, visited = set())
+        (failing, answer) = backtrack(query_dag, cs, emb = {}, ext = {query_dag.get_root()}, visited = set())
         return answer
 
     # Exit Condition, Assume embedding is valid
@@ -16,11 +16,11 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
     u = None
     u_c = None
     for vertex in ext:
-        ext_c = cs.ext_candidate(emb, vertex)
+        ext_c = cs.extendable_candidate(emb, vertex)
 
         # Failing Set : Emptyset-class
-        if u_c is None:
-            return (set(query_dag.get_ancestor(u)), set())
+        if ext_c is None:
+            return (query_dag.get_ancestor(vertex), set())
 
         if len(u_c) > len(ext_c):
             u = vertex
@@ -35,7 +35,7 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
         # Failing Set : Conflict-class
         if v in emb.values():
             u_conflict = list(emb.keys())[list(emb.values()).index(v)]
-            failing = set(query_dag.get_ancestor(u) + query_dag.get_ancestor(u))
+            failing = query_dag.get_ancestor(u).union(query_dag.get_ancestor(u))
             return (failing,set())
 
         child_emb = emb + {(u, v)}
