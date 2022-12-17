@@ -6,6 +6,9 @@ class Graph:
         self.label_stat = {}
         self.vertices = {}
 
+    def size(self):
+        return len(self.label_stat)
+
     def get_label_stat(self):
         return self.label_stat
 
