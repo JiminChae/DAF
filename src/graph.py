@@ -25,6 +25,10 @@ class Graph:
             self.label_stat[label] = 1
         self.vertices[vid] = (label, set())
 
+    def has_edge(self, src, dst):
+        assert src in self.vertices and dst in self.vertices
+        return dst in self.vertices[src][1]
+
     def set_edge(self, src, dst):
         assert src in self.vertices and dst in self.vertices
         self.vertices[src][1].add(dst)
