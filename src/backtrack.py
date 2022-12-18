@@ -35,7 +35,7 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
         # Failing Set : Conflict-class
         if v in emb.values():
             u_conflict = list(emb.keys())[list(emb.values()).index(v)]
-            failing = query_dag.get_ancestor(u).union(query_dag.get_ancestor(u))
+            failing = query_dag.get_ancestor(u).union(query_dag.get_ancestor(u_conflict))
             return (failing,set())
 
         child_emb = deepcopy(emb)
