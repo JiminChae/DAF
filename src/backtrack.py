@@ -38,7 +38,8 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
             failing = query_dag.get_ancestor(u).union(query_dag.get_ancestor(u))
             return (failing,set())
 
-        child_emb = emb + {(u, v)}
+        child_emb = deepcopy(emb)
+        child_emb[u] = v
 
         child_ext = deepcopy(ext)
         child_ext.remove(u)

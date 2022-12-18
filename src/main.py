@@ -22,5 +22,7 @@ def main():
     # 3. Backtrack using Adaptive Order & Failing Set
     matching = backtrack.backtrack(query_dag = query_dag, cs = cand_space)
 
+    print(matching)
+
 if __name__ == "__main__":
     main()
