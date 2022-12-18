@@ -78,6 +78,13 @@ class DAG:
     def get_root(self):
         return self.root
 
+    # For debugging
+    def print(self):
+        print("<DAG>")
+        for vid in self.dag.get_vertices():
+            print(f"{vid} -> {self.dag.get_vertex_neighbors(vid)}")
+        print()
+
 
 
 

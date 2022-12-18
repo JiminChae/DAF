@@ -86,3 +86,4 @@ class CS:
         print("<Candidate Sets>")
         for u, s in self.cand_sets.items():
             print(f"{u}: {s}")
+        print()
