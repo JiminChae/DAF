@@ -85,8 +85,7 @@ class DAG:
             print(f"{vid} -> {self.dag.get_vertex_neighbors(vid)}")
         print()
 
-
-
-
-
-
+        print("<DAG Inv>")
+        for vid in self.dag_inv.get_vertices():
+            print(f"{vid} -> {self.dag_inv.get_vertex_neighbors(vid)}")
+        print()
