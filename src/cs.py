@@ -80,3 +80,9 @@ class CS:
     def extendable_candidate(self, emb, u):
         # TODO
         pass
+
+    # For debugging
+    def print(self):
+        print("<Candidate Sets>")
+        for u, s in self.cand_sets.items():
+            print(u, s)
