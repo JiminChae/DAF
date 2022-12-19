@@ -17,9 +17,9 @@ src/
   util.py           : miscellaneous things
   
 sample/             : sample data & query graphs
-  01/
-  02/
-  yeast/
+  01/               : graph in the paper
+  02/               : graph introduced in presentation
+  yeast/            : yeast dataset
 ```
 
 ## Reference
