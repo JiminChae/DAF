@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
 
-import util
-import dag, cs, backtrack, naive
+import time
+import sys
+import util, dag, cs, backtrack, naive
 
 def main():
     if len(sys.argv) != 3:
@@ -13,6 +13,7 @@ def main():
     data = util.load_graph(sys.argv[1])
     query = util.load_graph(sys.argv[2])
 
+    s_time = time.time()
     # 1. Build a rooted DAG
     query_dag = dag.DAG(query, data)
 
@@ -21,10 +22,13 @@ def main():
 
     # 3. Backtrack using Adaptive Order & Failing Set
     matching = backtrack.backtrack(query_dag = query_dag, cs = cand_space)
-    print("DAF : " + str(matching))
+    e_time = time.time()
+    print("DAF gave " + str(len(matching)) + " answer in " + str(e_time-s_time) + "sec")
 
+    s_time = time.time()
     naive_matching = naive.naive_algo(data=data, query=query)
-    print("naive : " + str(naive_matching))
+    e_time = time.time()
+    print("naive gave " + str(len(naive_matching)) + " answer in " + str(e_time-s_time) + "sec")
 
     print(util.diff(matching, naive_matching))
 
