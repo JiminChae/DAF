@@ -23,8 +23,6 @@ def load_graph(filename):
                 # e <vid1> <vid2>
                 vid1 = int(line[1])
                 vid2 = int(line[2])
-                label = int(line[3])
-                assert label == 0
                 g.set_edge(vid1, vid2)
                 g.set_edge(vid2, vid1)
             else:
