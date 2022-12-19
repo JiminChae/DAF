@@ -81,12 +81,14 @@ class CS:
     # Get C_M(u) where M is a partial embedding
     def extendable_candidate(self, emb, u):
         try:
-            v = emb[u]
-            ext_cand = set()
-            for p in self.query_dag.get_parent(u):
-                q = emb[p]
-                s = self.edges[p, u][q]
-                ext_cand.intersection_update(s)
+            if len(self.query_dag.get_parent(u)) == 0:
+                ext_cand = self.get_cand_set(u)
+            else:
+                ext_cand = set()
+                for p in self.query_dag.get_parent(u):
+                    q = emb[p]
+                    s = self.edges[p, u][q]
+                    ext_cand.intersection_update(s)
             return ext_cand
         except KeyError:
             return None
