@@ -44,6 +44,8 @@ def naive_algo(data, query):
     for d_label in label:
         data_label_dict[d_label] = []
     for d_vertex in data.get_vertices():
+        if data.get_vertex_label(d_vertex) not in label:
+            continue
         data_label_dict[data.get_vertex_label(d_vertex)].append(d_vertex)
     data_label_list = [data_label_dict[l] for l in label]
 

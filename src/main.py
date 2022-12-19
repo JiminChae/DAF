@@ -3,7 +3,7 @@
 import sys
 
 import util
-import dag, cs, backtrack
+import dag, cs, backtrack, naive
 
 def main():
     if len(sys.argv) != 3:
@@ -21,8 +21,12 @@ def main():
 
     # 3. Backtrack using Adaptive Order & Failing Set
     matching = backtrack.backtrack(query_dag = query_dag, cs = cand_space)
+    print("DAF : " + str(matching))
 
-    print(matching)
+    naive_matching = naive.naive_algo(data=data, query=query)
+    print("naive : " + str(naive_matching))
+
+    print(util.diff(matching, naive_matching))
 
 if __name__ == "__main__":
     main()
