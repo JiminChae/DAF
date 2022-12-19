@@ -81,11 +81,7 @@ class DAG:
     # For debugging
     def print(self):
         print("<DAG>")
-        for vid in self.dag.get_vertices():
-            print(f"{vid} -> {self.dag.get_vertex_neighbors(vid)}")
-        print()
+        self.dag.print()
 
         print("<DAG Inv>")
-        for vid in self.dag_inv.get_vertices():
-            print(f"{vid} -> {self.dag_inv.get_vertex_neighbors(vid)}")
-        print()
+        self.dag_inv.print()

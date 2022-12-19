@@ -35,3 +35,9 @@ class Graph:
     def set_edge(self, src, dst):
         assert src in self.vertices and dst in self.vertices
         self.vertices[src][1].add(dst)
+
+    # For debugging
+    def print(self):
+        for vid in self.get_vertices():
+            print(f"{vid} -> {self.get_vertex_neighbors(vid)}")
+        print()
