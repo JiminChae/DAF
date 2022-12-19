@@ -99,3 +99,10 @@ class CS:
         for u, s in self.cand_sets.items():
             print(f"{u}: {s}")
         print()
+
+        print("<Candidate Edges>")
+        for e, d in self.edges.items():
+            print(f"  Query Edge {e} corresponds to:")
+            for v, s in d.items():
+                print(f"    Data Edge {v} -> {s}")
+
