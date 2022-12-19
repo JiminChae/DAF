@@ -6,11 +6,10 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
         (failing, answer) = backtrack(query_dag, cs, emb = {}, ext = {query_dag.get_root()}, visited = set())
         return answer
 
-    print(cs.extendable_candidate({0: 9, 1: 6, 2: 11}, 3))
     # print("emb : " + str(emb) + ", ext : " +str(ext) + ", visited : " + str(visited))
     # Exit Condition, Assume embedding is valid
     if len(emb) >= query_dag.size():
-        print("Embedding " + str(emb) + " made")
+        # print("Embedding " + str(emb) + " Made")
         return (set(), [emb])
     if len(ext) <= 0:
         return (set(), set())
@@ -20,11 +19,12 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
     u_c = None
     for vertex in ext:
         ext_c = deepcopy(cs.extendable_candidate(emb, vertex))
+        # print("Ext_cand call wiht emb : " + str(emb) + ", v : " + str(vertex))
 
         # Failing Set : Emptyset-class
         if ext_c is None or len(ext_c) == 0:
-            print("Emptyset Class at vertex : " + str(vertex) + ", ext_c : " + str(ext_c), end = "")
-            print(" with embedding : " + str(emb) + ", vertex : " + str(vertex))
+            # print("Emptyset Class at vertex : " + str(vertex) + ", ext_c : " + str(ext_c), end = "")
+            # print(" with embedding : " + str(emb) + ", vertex : " + str(vertex))
             return (query_dag.get_ancestor(vertex), set())
 
         if u_c is None or len(u_c) > len(ext_c):
@@ -41,7 +41,7 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
         # Failing Set : Conflict-class
         if v in emb.values():
             u_conflict = list(emb.keys())[list(emb.values()).index(v)]
-            print("Conflic Class with u : " + str(u) + ", u_c : " + str(u_conflict) + " with query vertex " +str(v))
+            # print("Conflic Class with u : " + str(u) + ", u_c : " + str(u_conflict) + " with query vertex " +str(v))
             failing = query_dag.get_ancestor(u).union(query_dag.get_ancestor(u_conflict))
             return (failing,set())
 
