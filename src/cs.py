@@ -84,11 +84,13 @@ class CS:
             if len(self.query_dag.get_parent(u)) == 0:
                 ext_cand = self.get_cand_set(u)
             else:
-                ext_cand = set()
                 for p in self.query_dag.get_parent(u):
                     q = emb[p]
                     s = self.edges[p, u][q]
+                try:
                     ext_cand.intersection_update(s)
+                except UnboundLocalError:
+                    ext_cand = s
             return ext_cand
         except KeyError:
             return None
