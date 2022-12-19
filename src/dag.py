@@ -51,6 +51,12 @@ class DAG:
     def size(self):
         return self.dag.size()
 
+    def get_dag(self):
+        return self.dag
+
+    def get_dag_inv(self):
+        return self.dag_inv
+
     def get_child(self, u):
         return self.dag.get_vertex_neighbors(u)
 

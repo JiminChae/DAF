@@ -41,3 +41,21 @@ def diff(ans, sol):
             return 1
 
     return 0
+
+
+
+def topological_sort(g):
+    def dfs(visited, order, v):
+        visited.append(v)
+        for x in g.get_vertex_neighbors(v):
+            if x not in visited:
+                dfs(visited, order, x)
+        order.insert(0, v)
+
+    visited = []
+    order = []
+    for v in g.get_vertices():
+        if v not in visited:
+            dfs(visited, order, v)
+
+    return order

@@ -1,4 +1,5 @@
 import dag
+import util
 
 #
 # Candidate Space
@@ -6,6 +7,7 @@ import dag
 class CS:
     def __init__(self, query, query_dag, data):
         self.query_dag = query_dag
+        self.data = data
 
         # { u : C(u) }
         # u : query vertex idx
@@ -33,6 +35,9 @@ class CS:
                     cand_set.add(v)
             self.cand_sets[u] = cand_set
 
+
+        self.optimize()
+
         # Add edges between the candidates
         for u in query_vertices:
             for u_c in query_vertices:
@@ -55,8 +60,6 @@ class CS:
                                 self.edges[u_c, u][v_c] = set()
                             self.edges[u_c, u][v_c].add(v)
 
-        # TODO: Optimize CS
-
     # Get the candidate set for node u
     def get_cand_set(self, u):
         return self.cand_sets[u]
@@ -77,6 +80,72 @@ class CS:
             return self.edges[e]
         except KeyError:
             return None
+
+    # Refine CS structure
+    #
+    # @return   True if the CS structure has been reduced
+    #           False o.w.
+    def refine(self, graph, order):
+        dirty = False
+
+        for u in reversed(order):
+            deleted = set()
+
+            for v in self.cand_sets[u]:
+                survived = True
+
+                for u_c in graph.get_vertex_neighbors(u):
+                    passed = False
+
+                    for v_c in self.cand_sets[u_c]:
+                        if self.data.has_edge(v, v_c):
+                            passed = True
+                            break
+
+                    if not passed:
+                        survived = False
+                        break
+                
+                if not survived:
+                    deleted.add(v)
+
+            old_len = len(self.cand_sets[u])
+            self.cand_sets[u].difference_update(deleted)
+            new_len = len(self.cand_sets[u])
+            if new_len < old_len:
+                dirty = True
+
+        return dirty
+
+    # Optimize CS structure
+    def optimize(self):
+        dag_graph = self.query_dag.get_dag()
+        dag_inv_graph = self.query_dag.get_dag_inv()
+
+        # Do topological sort
+        order = util.topological_sort(dag_graph)
+        order_inv = list(reversed(order))
+        print(order)
+
+        # State Machine
+        # 0: Running
+        # 1: One more chance
+        # 2: Stopped
+        state = 0
+        while True:
+            if self.refine(dag_inv_graph, order_inv):
+                state = 0
+            else:
+                state += 1
+                if state == 2:
+                    break
+
+            if self.refine(dag_graph, order):
+                state = 0
+            else:
+                state += 1
+                if state == 2:
+                    break
 
     # Get C_M(u) where M is a partial embedding
     def extendable_candidate(self, emb, u):
@@ -107,4 +176,3 @@ class CS:
             print(f"  Query Edge {e} corresponds to:")
             for v, s in d.items():
                 print(f"    Data Edge {v} -> {s}")
-
