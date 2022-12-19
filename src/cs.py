@@ -87,10 +87,10 @@ class CS:
                 for p in self.query_dag.get_parent(u):
                     q = emb[p]
                     s = self.edges[p, u][q]
-                try:
-                    ext_cand.intersection_update(s)
-                except UnboundLocalError:
-                    ext_cand = s
+                    try:
+                        ext_cand.intersection_update(s)
+                    except UnboundLocalError:
+                        ext_cand = s
             return ext_cand
         except KeyError:
             return None
