@@ -90,7 +90,7 @@ class CS:
                     try:
                         ext_cand.intersection_update(s)
                     except UnboundLocalError:
-                        ext_cand = s
+                        ext_cand = set(s)
             return ext_cand
         except KeyError:
             return None
