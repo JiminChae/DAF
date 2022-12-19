@@ -125,7 +125,6 @@ class CS:
         # Do topological sort
         order = util.topological_sort(dag_graph)
         order_inv = list(reversed(order))
-        print(order)
 
         # State Machine
         # 0: Running
