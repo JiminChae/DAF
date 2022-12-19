@@ -6,9 +6,11 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
         (failing, answer) = backtrack(query_dag, cs, emb = {}, ext = {query_dag.get_root()}, visited = set())
         return answer
 
+    # print("emb : " + str(emb) + ", ext : " +str(ext) + ", visited : " + str(visited))
     # Exit Condition, Assume embedding is valid
     if len(emb) >= query_dag.size():
-        return (set(), {emb})
+        # print("Embedding Made")
+        return (set(), [emb])
     if len(ext) <= 0:
         return (set(), set())
 
@@ -17,18 +19,21 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
     u_c = None
     for vertex in ext:
         ext_c = cs.extendable_candidate(emb, vertex)
+        # print("vertex : " + str(vertex) + ", ext_c : " + str(ext_c))
 
         # Failing Set : Emptyset-class
-        if ext_c is None:
+        if ext_c is None or len(ext_c) == 0:
+            # print("Emptyset Class")
             return (query_dag.get_ancestor(vertex), set())
 
-        if len(u_c) > len(ext_c):
+        if u_c is None or len(u_c) > len(ext_c):
             u = vertex
             u_c = ext_c
 
-    child_visited = visited + {u}
+    child_visited = deepcopy(visited)
+    child_visited.add(u)
     failing = set()
-    answer = set()
+    answer = []
 
     emb_exist = False
     for v in u_c: # for v in C(u)
@@ -57,15 +62,15 @@ def backtrack(query_dag, cs, emb = None, ext = None, visited = None):
         (child_failing, child_answer) = backtrack(query_dag, cs, child_emb, child_ext, child_visited)
 
         if emb_exist:
-            answer.union(child_answer)
+            answer += child_answer
         elif len(child_failing) == 0 or len(child_answer) > 0:
             # Failing Set : Embedding-class
             emb_exist = True
             failing = set()
-            answer.union(child_answer)
+            answer += child_answer
         elif u not in child_failing:
             failing = child_failing
-            answer = set()
+            answer = []
         else:
             failing.union(child_failing)
 
