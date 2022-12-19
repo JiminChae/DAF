@@ -41,7 +41,7 @@ class DAG:
 
             child_to_traverse = [child for child in query.get_vertex_neighbors(cur_vid) if bfs_unvisited[child]]
             child_to_traverse = sorted(child_to_traverse, key=lambda v:
-            (data.get_label_stat()[v], -len(query.get_vertex_neighbors(v))))
+            (data.get_label_stat()[data.get_vertex_label(v)], -len(query.get_vertex_neighbors(v))))
 
             for child in child_to_traverse:
                 self.dag.set_edge(cur_vid, child)
