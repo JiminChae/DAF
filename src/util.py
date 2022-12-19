@@ -29,3 +29,15 @@ def load_graph(filename):
                 assert False
 
     return g
+
+
+
+def diff(ans, sol):
+    if len(ans) != len(sol):
+        return 1
+
+    for d in ans:
+        if d not in sol:
+            return 1
+
+    return 0
