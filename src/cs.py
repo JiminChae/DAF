@@ -5,6 +5,8 @@ import dag
 #
 class CS:
     def __init__(self, query, query_dag, data):
+        self.query_dag = query_dag
+
         # { u : C(u) }
         # u : query vertex idx
         # C(u) : set
@@ -78,8 +80,16 @@ class CS:
 
     # Get C_M(u) where M is a partial embedding
     def extendable_candidate(self, emb, u):
-        # TODO
-        pass
+        try:
+            v = emb[u]
+            ext_cand = set()
+            for p in self.query_dag.get_parent(u):
+                q = emb[p]
+                s = self.edges[p, u][q]
+                ext_cand.intersection_update(s)
+            return ext_cand
+        except KeyError:
+            return None
 
     # For debugging
     def print(self):
